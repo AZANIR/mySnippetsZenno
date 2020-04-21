@@ -1,0 +1,8 @@
+﻿// Поиск элемента по ID
+//ID элемента
+string id = "text";
+
+//Поиск элемента
+var el = instance.ActiveTab.FindElementById(id);
+//Движение к элементу
+instance.ActiveTab.FullEmulationMouseMoveToHtmlElement(el);

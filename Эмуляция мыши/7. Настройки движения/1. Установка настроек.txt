@@ -1,0 +1,9 @@
+﻿// Пауза в миллисекундах при генерации следующей точки для движения мыши.
+int pause = 5;	//По умолчанию 5
+// Отклонение для паузы (1-й параметр). 
+int pauseVariance = 5;	//По умолчанию 5
+// Длина шага по прямой линии между генерируемыми точками.
+int pointDistanse = 10;	//По умолчанию 5
+
+//Установка настроек движения мыши
+instance.ActiveTab.FullEmulationMouseSetOptions(pause, pauseVariance, pointDistanse);

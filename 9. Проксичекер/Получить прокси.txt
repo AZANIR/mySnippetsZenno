@@ -1,0 +1,13 @@
+﻿//Instance.GetProxy - получаем текущий прокси инстанса
+string strOldProxy = instance.GetProxy();
+
+//ZennoPoster.GetProxy - получаем прокси из пула ZennoPoster с удалением
+string strProxy1 = ZennoPoster.GetProxy("filter");
+
+//ZennoPoster.GetProxyWithOutDelete - получаем прокси из пула ZennoPoster без удаления
+string strProxy2 = ZennoPoster.GetProxyWithOutDelete("filter");
+
+project.SendInfoToLog(String.Format("Выполнено! Старый прокси: {0}; получены прокси: {1} и {2}", strOldProxy, strProxy1, strProxy2));
+
+//Примечания:
+//1. Перед запуском кода не забудьте прописать параметры доступа к смс-сервису в настройках программы, а также выбрать имя dll-библиотеки соответствующего сервиса

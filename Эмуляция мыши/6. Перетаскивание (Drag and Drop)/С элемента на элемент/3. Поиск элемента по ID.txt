@@ -1,0 +1,14 @@
+﻿// Поиск 1-го элемента по ID
+//ID элемента
+string id1 = "panel";
+//Поиск 1-го элемента
+var el1 = instance.ActiveTab.FindElementById(id1);
+
+// Поиск 2-го элемента по ID
+//ID элемента
+string id2 = "field";
+//Поиск 2-го элемента
+var el2 = instance.ActiveTab.FindElementById(id2);
+
+//Перетаскивание 1-го элемента на 2-ой
+instance.ActiveTab.FullEmulationMouseDragAndDrop(el1, el2);

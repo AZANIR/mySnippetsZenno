@@ -1,0 +1,1 @@
+var a; var c={-Variable.count-}; var b=0; var members; while (b < 25) { b = b + 1; c=c+1000; a=a+","+API.groups.getMembers({"group_id": "{-Variable.group_id-}","count": "1000","offset":c}).items; }; return a;

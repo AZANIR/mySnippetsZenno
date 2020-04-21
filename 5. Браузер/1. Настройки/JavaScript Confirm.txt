@@ -1,0 +1,5 @@
+﻿//Instance.SetOkCancelConfirmPolicy - кнопка, которую необходимо нажать в JavaScript-оповещении от сайта (в случае его появления)
+instance.SetOkCancelConfirmPolicy("Ok"); 
+
+//Примечания:
+//1. Возможные значения параметра метода SetOkCancelConfirmPolicy: "ok" либо "cancel";

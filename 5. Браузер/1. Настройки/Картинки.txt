@@ -1,0 +1,2 @@
+﻿//Instance.LoadPictures - загружать изображения с сервера или нет
+instance.LoadPictures = false; //true, если включить, false, если выключить

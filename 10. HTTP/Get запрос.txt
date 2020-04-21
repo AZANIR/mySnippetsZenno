@@ -1,0 +1,45 @@
+﻿//Получим ссылку на фото дня сервиса Яндекс.Фото для демонстрации работы с типом ответа File
+Tab Tab1 = instance.ActiveTab;
+if (Tab1.URL!="https://fotki.yandex.ru/next/") {
+	Tab1.Navigate("https://fotki.yandex.ru/next/");
+	Tab1.WaitDownloading();
+}
+string strImageUrl = Tab1.FindElementByXPath("//a[starts-with(@class,'photo-well-image')]/span", 0).GetAttribute("style");
+strImageUrl = new Regex(@"(?<=url\().*(?=\);)").Match(strImageUrl).Value;
+
+//ZennoPoster.HttpGet - выполнение GET-запроса
+string strGetResultHeader = ZennoPoster.HttpGet("https://www.google.ru/", "", "UTF-8", ZennoLab.InterfacesLibrary.Enums.Http.ResponceType.HeaderOnly);
+string strGetResultBody = ZennoPoster.HttpGet("https://www.google.ru/", "", "UTF-8", ZennoLab.InterfacesLibrary.Enums.Http.ResponceType.BodyOnly);
+string strGetResultHeaderBody = ZennoPoster.HttpGet("https://www.google.ru/", "", "UTF-8", ZennoLab.InterfacesLibrary.Enums.Http.ResponceType.HeaderAndBody);
+string strDownloadResult = ZennoPoster.HttpGet(strImageUrl, "", "UTF-8", ZennoLab.InterfacesLibrary.Enums.Http.ResponceType.File, 5000, DownloadPath: project.Path);
+//string strDownloadResult2 = ZennoPoster.HttpGet(strImageUrl, "", "UTF-8", ZennoLab.InterfacesLibrary.Enums.Http.ResponceType.FileAndHeaders, 5000, DownloadPath:project.Path);
+
+//Сохраняем результаты запросов в текстовые файлы (для наглядности)
+File.WriteAllText(project.Directory + @"\HeaderOnly.txt", strGetResultHeader);
+File.WriteAllText(project.Directory + @"\BodyOnly.txt", strGetResultBody);
+File.WriteAllText(project.Directory + @"\HeaderAndBody.txt", strGetResultHeaderBody);
+
+project.SendInfoToLog("Выполнено! Проверьте содержимое папки проекта");
+
+//Примечания:
+//1. Параметры метода HttpGet (https://help.zennolab.com/en/v5/zennoposter/5.9.9/webframe.html#topic395.html):
+//  первый: ссылка (URL);
+//  второй: прокси;
+//  третий: кодировка (encoding)
+//  четвёртый: тип ответа сервера
+//  пятый: таймаут запроса
+//  шестой: куки
+//  седьмой: UserAgent
+//  восьмой: разрешать редиректы или нет
+//  девятый: максимальное количество редиректов
+//  десятый: дополнительные заголовки (AdditionalHeaders)
+//  одиннадцатый: путь сохранения
+//  двенадцатый: использовать исходный URL (OriginalUrl) или нет
+//2. Члены перечисления ZennoLab.InterfacesLibrary.Enums.Http.ResponceType (тип ответа сервера):
+//  Body Only - только тело страницы;
+//  File - бинарный файл;
+//  FileAndHeaders - бинарный файл и заголовки;
+//  HeaderAndBody - заголовки и тело страницы;
+//  HeaderOnly - только заголовки
+//3. Установка значения свойства instance.DownloadsPath не влияет на путь сохранения файла методом HttpGet. Используйте соответствующий параметр метода
+//4. Подробно механизмы работы с POST-GET запросами будем рассматривать на ступени Expert (уже после старта первого потока)

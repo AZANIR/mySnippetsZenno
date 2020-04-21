@@ -1,0 +1,67 @@
+﻿//Создаём объект класса IZennoTable, привязываемся к списку уровня проекта
+IZennoTable tblTest = project.Tables["Таблица 1"];
+tblTest.Clear(); //очищаем таблицу
+
+//наполняем таблицу тестовыми значениями
+tblTest.AddRow(new String[]{"Это", "1", "строка"});
+tblTest.AddRow(new String[]{"Это", "2", "строка"});
+tblTest.AddRow(new String[]{"Это", "3sadf", "строка"});
+tblTest.AddRow(new String[]{"Это", "2", "строка"});
+tblTest.AddRow(new String[]{"Эта", "40", "строка"});
+tblTest.AddRow(new String[]{"Это", "5", "строка"}); //Проверить сочетание true + 3дцать
+tblTest.AddRow(new String[]{"Это", "7", "стрАка"});
+tblTest.AddRow(new String[]{"Это", "6", "стрЕка"});
+tblTest.AddRow(new String[]{"Это", "5", "стрУка"});
+tblTest.AddRow(new String[]{"Это", "1", "стростро"});
+tblTest.AddRow(new String[]{"Эты", "9", "строчка"});
+
+//Сортируем данные в выбранных столбцах таблицы (сортировку по всем столбцам делайте перечислением этих столбцов в переменной strSortCondition)
+bool blnSortAsNumbers = true; //пытаться ли сортировать значения как числа
+string strSortCondition = "0 ASC, 1 ASC"; //тип сортировки: строка в формате номер столбца тип сортировки, через запятую. ASC-по возрастанию, DESC-по убыванию
+
+if(tblTest.RowCount>0) {
+	System.Data.DataTable tblData = new DataTable(); //создаём временную таблицу (объект типа DataTable)
+
+	for (int i=0; i<tblTest.ColCount;i++) {
+		//создаём структуру временной таблицы
+		bool blnIsNumericColumn = true;
+		if (blnSortAsNumbers) {
+			//определяем, содержит ли столбец цифровые данные
+			for (int r=0; r<tblTest.RowCount; r++) {
+				if (!Regex.IsMatch(tblTest.GetCell(i,r), @"^\d+$")) {
+					blnIsNumericColumn=false;
+					break;
+				}
+			}
+		}
+		
+		if (blnSortAsNumbers && blnIsNumericColumn){
+			tblData.Columns.Add(new DataColumn(i.ToString(), typeof(int)));
+		}else{
+			tblData.Columns.Add(new DataColumn(i.ToString(), typeof(string)));
+		}
+	}
+	for (int i=0; i<tblTest.RowCount;i++) {
+		//наполняем временную таблицу данными
+		DataRow newRow = tblData.NewRow();
+		for (int n=0; n<tblTest.ColCount;n++) {
+			newRow[n.ToString()] = tblTest.GetCell(n,i);
+		}
+		tblData.Rows.Add(newRow);
+	}
+	//сортируем данные во временной таблице
+	DataView dvData = new DataView(tblData);
+	dvData.Sort = strSortCondition;
+	tblData = dvData.ToTable();
+	//подменяем данные на отсортированные в исходной таблице
+	tblTest.Clear();
+	foreach (DataRow resultRow in tblData.Rows) {
+		tblTest.AddRow(String.Join(tblTest.ColSeparator, resultRow.ItemArray));
+	}
+}
+
+project.SendInfoToLog("Выполнено. Проверьте содержимое таблицы Таблица 1");
+
+//Примечания:
+//1. Для сортировки по столбцам задействован класс DataTable. Работа с данным классом будет подробно рассматриваться на уровне C# Expert Course.
+//2. Чтобы этот код заработал в вашем проекте, необходимо подключить к проекту (в External Assemblies) библиотеку System.Xml из .Net4.0;

@@ -1,0 +1,4 @@
+﻿//Tab.NavigateTimeout - установка таймаута загрузки вкладки (таба)
+instance.ActiveTab.NavigateTimeout = 60;
+
+project.SendInfoToLog("Выполнено");

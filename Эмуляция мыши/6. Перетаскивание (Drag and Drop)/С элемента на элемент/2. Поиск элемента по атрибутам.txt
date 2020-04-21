@@ -1,0 +1,34 @@
+﻿// Поиск 1-го элемента по атрибутам
+//Тег элемента
+string tag1 = "img";
+//Атрибут элемента
+string attr1 = "src";
+//Значение атрибута
+string value1 = "http://site.+?/";
+//Тип поиска (text, notext или regex)
+string searchType1 = "regex";
+//Номер совпадения
+int num1 = 0;
+
+//Поиск 1-го элемента
+var el1 = instance.ActiveTab.FindElementByAttribute(tag1, attr1, value1, searchType1, num1);
+
+
+// Поиск 2-го элемента по атрибутам
+//Тег элемента
+string tag2 = "textarea";
+//Атрибут элемента
+string attr2 = "id";
+//Значение атрибута
+string value2 = "field";
+//Тип поиска (text, notext или regex)
+string searchType2 = "text";
+//Номер совпадения
+int num2 = 0;
+
+//Поиск 2-го элемента
+var el2 = instance.ActiveTab.FindElementByAttribute(tag2, attr2, value2, searchType2, num2);
+
+
+//Перетаскивание 1-го элемента на 2-ой
+instance.ActiveTab.FullEmulationMouseDragAndDrop(el1, el2);

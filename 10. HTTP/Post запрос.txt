@@ -1,0 +1,35 @@
+﻿//ZennoPoster.HttpPost - отправка POST-запроса с получением результата его выполнения
+string strPostResult = ZennoPoster.HttpPost("http://www.cs.tut.fi/cgi-bin/run/~jkorpela/echo.cgi", 
+	"Заголовок=This+is%0D%0Asome+text%0D%0Ain+several+lines.&amp;box=yes&amp;hidden+field=something", 
+	"application/x-www-form-urlencoded", "", "utf-8", ZennoLab.InterfacesLibrary.Enums.Http.ResponceType.BodyOnly);
+
+strPostResult = strPostResult.Replace("</head>", @"<meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8""></head>"); //чтобы сохранённая страница отобразилась в браузере без крякозябр
+File.WriteAllText(project.Directory + @"\post_result.html", strPostResult);
+
+project.SendInfoToLog("Выполнено! Проверьте содержимое папки проекта");
+
+//Примечания:
+//1. Параметры метода HttpPost (https://help.zennolab.com/en/v5/zennoposter/5.9.9/webframe.html#topic397.html):
+//  первый: ссылка (URL);
+//  второй: контент запроса;
+//  третий: тип контента запроса
+//  четвёртый: прокси
+//  пятый: кодировка
+//  шестой: тип ответа сервера
+//  седьмой: таймаут
+//  восьмой: куки
+//  девятый: UserAgent
+//  десятый: разрешить редиректы или нет
+//  одиннадцатый: максимальное количество редиректов
+//  двенадцатый: дополнительные заголовки
+//  тринадцатый: путь сохранения файла
+//  четырнадцатый: использовать исходный URL (OriginalUrl) или нет
+//2. Члены перечисления ZennoLab.InterfacesLibrary.Enums.Http.ResponceType (тип ответа сервера):
+//  Body Only - только тело страницы;
+//  File - бинарный файл;
+//  FileAndHeaders - бинарный файл и заголовки;
+//  HeaderAndBody - заголовки и тело страницы;
+//  HeaderOnly - только заголовки
+//3. Установка значения свойства instance.DownloadsPath не влияет на путь сохранения файла методом HttpPost. Используйте соответствующий параметр метода
+//4. В примере рассмотрена только работа с форматом ответа File. Работу с другими типами ответа сервера делается по аналогии с примерами для HttpGet
+//5. Подробно механизмы работы с POST-GET запросами будем рассматривать на ступени Expert (уже после старта первого потока)

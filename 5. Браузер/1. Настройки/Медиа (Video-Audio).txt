@@ -1,0 +1,2 @@
+﻿//Instance.UseMedia - использовать Видео/Аудио контент на открываемых страницах
+instance.UseMedia = true; //true, если использовать, false, если нет

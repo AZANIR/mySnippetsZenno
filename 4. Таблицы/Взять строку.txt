@@ -1,0 +1,96 @@
+﻿//Создаём объект класса IZennoTable, привязываемся к списку уровня проекта
+IZennoTable tblTest = project.Tables["Таблица 1"];
+tblTest.Clear(); //очищаем таблицу
+
+//Создаём объект класса IZennoList (вспомогательный список), привязываемся к списку уровня проекта
+IZennoList lstTest = project.Lists["Список 1"];
+lstTest.Clear(); //очищаем список
+
+//наполняем таблицу тестовыми значениями
+tblTest.AddRow(new String[]{"Это", "первая", "строка"});
+tblTest.AddRow(new String[]{"Это", "вторая", "строка"});
+tblTest.AddRow(new String[]{"Это", "третья", "строка"});
+tblTest.AddRow(new String[]{"Это", "четвёртая", "строка"});
+tblTest.AddRow(new String[]{"Это", "пятая", "строка"});
+tblTest.AddRow(new String[]{"Это", "шестая", "строка"});
+tblTest.AddRow(new String[]{"Это", "седьмая", "строка"});
+tblTest.AddRow(new String[]{"Это", "восьмая", "строка"});
+tblTest.AddRow(new String[]{"Это", "девятая", "строка"});
+
+//Объявляем переменную, содержащую информацию, удалять ли элемент из таблицы после взятия
+bool blnRemoveAfterTaken=true;
+
+//IZennoTable.GetRow: получаем строку таблицы с указанным индексом и помещаем в список (каждая ячейка - с новой строки)
+int intRowToListIndex = 0; //индекс элемента, который будем получать
+lstTest.AddRange(tblTest.GetRow(intRowToListIndex));
+if(blnRemoveAfterTaken) tblTest.DeleteRow(intRowToListIndex);
+
+//IZennoTable.GetRow: получаем строку таблицы с указанным индексом и помещаем в переменные
+int intRowToVarsIndex = 0; //индекс строки таблицы, который будем получать
+string[] arrRowFields = tblTest.GetRow(intRowToVarsIndex).ToArray();
+string strFirstField = arrRowFields[0];
+string strSecondField = arrRowFields[1];
+string strThirdField = arrRowFields[2];
+if(blnRemoveAfterTaken) tblTest.DeleteRow(intRowToVarsIndex);
+project.SendInfoToLog(String.Format("Наши переменные:{0}Первая: {1}, Вторая: {2}, Третья: {3}", Environment.NewLine, strFirstField, strSecondField, strThirdField));
+
+
+
+//Получаем случайную строку таблицы и помещаем в список (каждая ячейка - с новой строки). Поместить результат в переменные вы можете по аналогии с получением в переменные элемента с заданным индексом
+int intRandomRow = new Random().Next(0, tblTest.RowCount-1); //индекс элемента, который будем получать
+lstTest.AddRange(tblTest.GetRow(intRandomRow));
+if(blnRemoveAfterTaken) tblTest.DeleteRow(intRandomRow);
+
+//Получаем строки таблицы с указанными номерами и помещаем в список. Поместить результат в переменные вы можете по аналогии с получением в переменные элемента с заданным индексом
+string strRowIndexes = "0, 2-5, random"; //Объявляем переменную, содержащую номера и/или диапазоны строк таблицы. Укажите "Random", если нужно получить случайную строку
+int intTakenElements = 0;
+Random rndRowIndex = new Random();
+foreach (string strRowIndex in strRowIndexes.Replace(" ", String.Empty).Split(',')) {
+	int intCurrentIndex;
+	if (Regex.IsMatch(strRowIndex, @"^\d+$")) {
+		intCurrentIndex = Convert.ToInt32(strRowIndex)-intTakenElements;
+		lstTest.AddRange(tblTest.GetRow(intCurrentIndex));
+		if(blnRemoveAfterTaken) {
+			tblTest.DeleteRow(intCurrentIndex);
+			intTakenElements++;
+		}
+	}else if(strRowIndex.ToLower()=="random"){
+		intCurrentIndex = Convert.ToInt32(rndRowIndex.Next(0, tblTest.RowCount));
+		lstTest.AddRange(tblTest.GetRow(intCurrentIndex));
+		if(blnRemoveAfterTaken) {
+			tblTest.DeleteRow(intCurrentIndex);
+			intTakenElements++;
+		}
+	}else if(strRowIndex.Contains("-")){
+		int intStartIndex = Convert.ToInt32(new Regex(@"^\d(?=\D)").Match(strRowIndex).Value);
+		int intEndIndex = Convert.ToInt32(new Regex(@"(?<=\D)\d$").Match(strRowIndex).Value);
+		for (int i=intStartIndex; i<intEndIndex+1; i++) {
+			intCurrentIndex = i-intTakenElements;
+			lstTest.AddRange(tblTest.GetRow(intCurrentIndex));
+			if(blnRemoveAfterTaken) {
+				tblTest.DeleteRow(intCurrentIndex);
+				intTakenElements++;
+			}
+		}
+	}else{
+		//Здесь можно выбрасывать сообщение об ошибке (неправильный синтаксис значения переменной strRowIndexes)
+	}
+}
+
+//Получаем все строки таблицы в список
+int intRowPosition=0;
+while(true) {
+	lstTest.AddRange(tblTest.GetRow(intRowPosition));
+	
+	if(blnRemoveAfterTaken) {
+		tblTest.DeleteRow(intRowPosition);
+	}else{
+		intRowPosition++;
+	}
+	if(tblTest.RowCount==0||intRowPosition>tblTest.RowCount) break;
+}
+
+project.SendInfoToLog("Выполнено. Проверьте содержимое списка Список 1.");
+
+//Примечания:
+//1. Блок кода "Получаем строки таблицы с указанными номерами и помещаем в список" являет собой пример "сделки со своей совестью". Постараюсь рассмотреть этот пример в материале о хорошем и плохом коде

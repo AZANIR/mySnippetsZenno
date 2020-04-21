@@ -1,0 +1,31 @@
+﻿//Переходим на сайт для демонстрации
+string strURL = "http://zennolab.com/en";
+Tab Tab1 = instance.ActiveTab;
+if (Tab1.URL!=strURL) {
+	Tab1.Navigate(strURL);
+	Tab1.WaitDownloading();
+}
+
+string strDOM = instance.ActiveTab.DomText;
+string strSource = instance.ActiveTab.GetSourceText("utf-8");
+string strText = instance.ActiveTab.PageText;
+string strCurrentURL = instance.ActiveTab.URL;
+
+//сохраним дом, исходники и текст в файлы (для анализа)
+File.WriteAllText(project.Directory + @"\dom.txt", strDOM);
+File.WriteAllText(project.Directory + @"\source.txt", strSource);
+File.WriteAllText(project.Directory + @"\text.txt", strText);
+File.WriteAllText(project.Directory + @"\url.txt", strCurrentURL);
+
+string strTagsRegex = @"<img.*?>|<p>.*</p>";
+MatchCollection mthMatches = Regex.Matches(strDOM, strTagsRegex);
+string strFilteredDom = String.Empty;
+for (int i=0; i<mthMatches.Count; i++) {
+	strFilteredDom += mthMatches[i].Value + Environment.NewLine;
+}
+return strFilteredDom;
+
+//Примечания:
+//1. Функционал, который можно задействовать поставив галку "Парсить результат", подробно рассмотрен в демо-проекте "1.Данные". Здесь повторно разбирать я его не буду 
+//2. Алгоритм работы опции "Обрабатывать только указанные теги" в версии 5.9.9.1 не совсем понятен. Так, если отметить только div и img, то при запуске для страницы
+//  zennolab.com в тексте будут присутствовать теги a, ul, li, h2, p. Почему - не понятно. Привёл аналог функции в виде получения всех совпадений с регуляркой.

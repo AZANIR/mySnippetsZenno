@@ -1,0 +1,11 @@
+﻿// Поиск элемента по ID
+//ID элемента
+string id = "text";
+
+//Примерный размер шрифта текста элемента
+int sizeOfType = 35;
+
+//Поиск элемента
+var el = instance.ActiveTab.FindElementById(id);
+//Чтение элемента
+instance.ActiveTab.FullEmulationMouseMoveAboveHtmlElement(el, sizeOfType);

@@ -1,0 +1,2 @@
+﻿//Instance.UseCSS - грузить css-стили сайта или нет
+instance.UseCSS = true; //true, если включить, false, если выключить

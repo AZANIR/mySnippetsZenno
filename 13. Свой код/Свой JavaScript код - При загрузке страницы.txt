@@ -1,0 +1,6 @@
+﻿string strJavaScript = File.ReadAllText(project.Directory + @"\script-google.js"); //"document.write(1)";
+
+instance.ActiveTab.SubscribePageLoading(strJavaScript, "onetime", "google.ru");
+project.SendInfoToLog("Установили скрипт при загрузке страницы. Переходим на сайт...");
+instance.ActiveTab.Navigate("https://google.ru");
+project.SendInfoToLog("Выполнено. Проверьте содержимое сайта.");

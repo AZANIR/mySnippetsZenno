@@ -1,0 +1,8 @@
+﻿// Поиск элемента по имени (свойство name)
+//name элемента
+string name = "text";
+
+//Поиск элемента
+var el = instance.ActiveTab.FindElementByName(name);
+//Движение к элементу
+instance.ActiveTab.FullEmulationMouseMoveToHtmlElement(el);

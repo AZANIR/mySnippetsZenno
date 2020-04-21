@@ -1,0 +1,15 @@
+﻿int intTest = 5;
+string strResult = String.Empty;
+
+if (intTest<5) {
+	strResult = "Меньше!!";
+}else if (intTest>5){
+	strResult = "Больше!!";
+}else{
+	strResult = "Похоже что равно!!";
+}
+
+project.SendInfoToLog("Выполнено! Результат: " + strResult);
+
+//Примечания:
+//1. Подробнее смотрите в разделе "2. Основы языка C#" курса ZennoPro Base Course

@@ -1,0 +1,24 @@
+﻿Tab Tab1 = instance.ActiveTab;
+//instance.ActiveTab.FullEmulationMouseWheel(0,-300);//Прокрутка колёсика - Если ставим "- (Минус)" то скрол пойдет вверх, если не ставим то вниз
+Random random = new Random();
+int schet = random.Next(3,10);
+
+
+		
+		//Первый вариант циклического выполнения: операторы for, break, continue;
+		for (int i=0; i<schet; i++){
+			
+			int rndplay = random.Next(100,500);
+			instance.ActiveTab.FullEmulationMouseWheel(0,rndplay);
+			int pause = random.Next(1000,3000);
+			System.Threading.Thread.Sleep(pause);
+			
+//			rndplay = random.Next(20,300);
+//			instance.ActiveTab.FullEmulationMouseWheel(0,-rndplay);
+//			System.Threading.Thread.Sleep(pause);
+
+//			rndplay = random.Next(20,300);
+//			instance.ActiveTab.FullEmulationMouseWheel(0,rndplay);
+//			System.Threading.Thread.Sleep(pause);
+		}
+		//названия выражений в круглых скобках: (выражение инициализации;выражение условия;выражение итерации)

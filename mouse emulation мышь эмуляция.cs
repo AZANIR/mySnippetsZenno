@@ -1,0 +1,1 @@
+﻿//http://zennolab.com/discussion/threads/snippety-ehmuljacii-myshi-fullemulationmouse.35369/#post-271425

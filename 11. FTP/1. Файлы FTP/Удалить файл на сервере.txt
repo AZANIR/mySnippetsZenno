@@ -1,0 +1,9 @@
+﻿string strServerAddress = project.Variables["cfg_server_address"].Value;
+int intServerPort = Convert.ToInt32(project.Variables["cfg_server_port"].Value);
+string strServerLogin = project.Variables["cfg_server_login"].Value;
+string strServerPassword = project.Variables["cfg_server_password"].Value;
+
+//ZennoPoster.FtpDeleteFile - удаление файла
+ZennoPoster.FtpDeleteFile(strServerAddress, intServerPort, "FTP", strServerLogin, strServerPassword, "", "/test1.txt");
+
+project.SendInfoToLog("Выполнено! Проверьте содержимое папки на FTP сервере");

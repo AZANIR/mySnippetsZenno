@@ -1,0 +1,2 @@
+﻿//Получить координату мыши во вкладке по горизонтали (X)
+int x = instance.ActiveTab.FullEmulationMouseCurrentPosition.X;

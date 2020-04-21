@@ -1,0 +1,57 @@
+﻿//Получить ошибку из-за которой выполнение шаблона остановилось
+var error = project.GetLastError();
+var action_errors = "";
+if(error != null) action_errors = string.Format("ActionComment: {0}.\r\nActionGroupId: {1}.\r\nActionId: {2}\r\n--------------------------------------------------------", error.ActionComment, error.ActionGroupId, error.ActionId);
+
+//Присваиваем переменной путь к файлу
+string strFilePath = project.Directory + @"\actions_errors.txt";
+//В файл дописывается текст если файла не существует будет создан
+//Чтобы текст дописывался с новой строки - используем Environment.NewLine
+File.AppendAllText(strFilePath,
+		DateTime.Now.ToString("MM-dd-yyyy_hh-mm-ss") + Environment.NewLine + 
+		action_errors + Environment.NewLine); 
+
+// сохраняем скриншот
+File.WriteAllBytes(project.Path + "error\\" + error.ActionId + ".jpg", Convert.FromBase64String(instance.ActiveTab.FindElementByTag("html", 0).DrawToBitmap(false)));
+
+// формируем строку запроса для постинга на imgur
+string post_data = "----------------------8d58d7876f67e5b"+"\n"+
+	"Content-Disposition: form-data; name=\"image\""+"; filename=\""+ error.ActionId + ".jpg"+"\"\n"+
+	"Content-Type: image/jpg"+"\n"+project.Path + "error\\" + error.ActionId + ".jpg"+"\n"+
+	"----------------------8d58d7876f67e5b--";
+//постим запросом на imgur
+int query_count = 0;
+string answer = string.Empty;
+while(answer==""){
+	answer = ZennoPoster.HttpPost(
+		"https://api.imgur.com/3/image",post_data,
+		"multipart/form-data",
+		"",
+		"utf-8",
+		ZennoLab.InterfacesLibrary.Enums.Http.ResponceType.HeaderAndBody,
+		30000,"","ShareX",true,10,
+		new [] {
+			"Host: api.imgur.com",
+			"Authorization: Client-ID d297fd441566f99",
+			"Content-Type: multipart/form-data; boundary=--------------------8d58d7876f67e5b",
+			"Connection: keep-alive"
+		}
+	);
+	if (++query_count>=5 && answer=="")
+	{
+		project.Variables["answer"].Value = "";
+		project.SendWarningToLog("[Финальная отправка данных: пустой ответ 5 раз(а) подряд]", true);
+	}
+}
+//парсим нашу картинку //(?<="id":").*?(?=")
+string pic="";
+try{pic = Convert.ToString(Regex.Match(answer, @"(?<=id"":"").*?(?="")")).Trim();}catch{}
+string deletehash="";
+try{deletehash = Convert.ToString(Regex.Match(answer, @"(?<=deletehash"":"").*?(?="")")).Trim();}catch{}
+
+//постим в телегу скриншот
+ZennoPoster.HttpGet("https://api.telegram.org/bot468555369:AAFlAr8zrT6FXPXedmKWD_mauKBNQzI4E1M/sendPhoto?chat_id=463720106&photo="+"https://i.imgur.com/"+pic+".jpg",
+		"", "UTF-8", ZennoLab.InterfacesLibrary.Enums.Http.ResponceType.BodyOnly);
+//постим в телегу сообщение
+ZennoPoster.HttpGet("https://api.telegram.org/bot468555369:AAFlAr8zrT6FXPXedmKWD_mauKBNQzI4E1M/sendMessage?chat_id=463720106&text="+action_errors,
+		"", "UTF-8", ZennoLab.InterfacesLibrary.Enums.Http.ResponceType.BodyOnly);	

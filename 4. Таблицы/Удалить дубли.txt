@@ -1,0 +1,44 @@
+﻿//Создаём объект класса IZennoTable, привязываемся к списку уровня проекта
+IZennoTable tblTest = project.Tables["Таблица 1"];
+tblTest.Clear(); //очищаем таблицу
+
+//наполняем таблицу тестовыми значениями
+tblTest.AddRow(new String[]{"Это", "первая", "строка"});
+tblTest.AddRow(new String[]{"Это", "первая", "строка"});
+tblTest.AddRow(new String[]{"Это", "первая", "страка"});
+tblTest.AddRow(new String[]{"Это", "вторая", "строка"});
+tblTest.AddRow(new String[]{"Это", "третья", "строка"});
+
+//Удаляем дубли по всем столбцам
+List<string> lstTemp = new List<string>();
+string strDedupDelimiter = "<deadup>";
+for (int i=0;i<tblTest.RowCount;i++) {
+	lstTemp.Add(String.Join(strDedupDelimiter,tblTest.GetRow(i)));
+}
+tblTest.Clear();
+foreach(string strUniqueString in lstTemp.Distinct()) {
+	tblTest.AddRow(Regex.Split(strUniqueString, Regex.Escape(strDedupDelimiter)));
+}
+
+//Удаляем дубли по выбранным столбцам
+int[] arrColumns = new Int32[]{0,1}; //массив, содержащий номера столбцов
+List<string> lstDedup = new List<string>();
+int intTableString = 0;
+string strDelimiter = "<deadup>";
+while(true) {
+	if (intTableString==tblTest.RowCount) break;
+	
+	string strColString = String.Empty;
+	for(int i=0;i<arrColumns.Count();i++){
+		strColString += tblTest.GetCell(arrColumns[i],intTableString);
+		if (i<arrColumns.Count()-1) strColString += strDelimiter;
+	}
+	if (lstDedup.Contains(strColString)){
+		tblTest.DeleteRow(intTableString);
+	}else{
+		lstDedup.Add(strColString);
+		intTableString++;
+	}
+}
+
+project.SendInfoToLog("Выполнено. Проверьте содержимое таблицы Таблица 1");

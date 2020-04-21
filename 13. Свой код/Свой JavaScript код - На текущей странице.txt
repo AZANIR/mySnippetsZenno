@@ -1,0 +1,10 @@
+﻿Tab Tab1 = instance.ActiveTab;
+Tab1.Navigate("https://ya.ru/");
+Tab1.WaitDownloading();
+
+string strJavaScript = File.ReadAllText(project.Directory + @"\script-yandex.js");
+//return strJavaScript;
+
+string strResult = instance.ActiveTab.MainDocument.EvaluateScript(strJavaScript);
+
+project.SendInfoToLog("Выполнено. Проверяйте результат");

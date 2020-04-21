@@ -1,0 +1,23 @@
+﻿//создаём кортеж для передачи переменных в вызываемый проект
+var mapVars = new List<Tuple<string, string>>();
+mapVars.Add(new Tuple<string, string>("subproject_source_1", "subproject_source_1"));
+mapVars.Add(new Tuple<string, string>("subproject_source_2", "subproject_source_2"));
+mapVars.Add(new Tuple<string, string>("subproject_result", "subproject_result"));
+
+string strSubprojectPath = project.Directory+@"\Подпроект.xmlz"; //путь к подпроекту
+
+bool blnProjectResult = project.ExecuteProject(strSubprojectPath, mapVars, true, true);
+if (blnProjectResult) {
+	project.SendInfoToLog("Вызов внешнего проекта успешно завершён");
+}else{
+	project.SendInfoToLog("Вызов внешнего проекта закончился неудачей");
+}
+
+//Примечания:
+//1. Параметры метода ExecuteProject (https://help.zennolab.com/en/v5/zennoposter/5.9.9/webframe.html#topic617.html):
+//  первый - путь к файлу внешнего проекта
+//  второй - кортеж с переменными, привязываемыми (Mapping) к переменным внешнего проекта
+//  третий - привязывать ли переменные даже если выполнение вызываемого проекта окончилось неудачей
+//  четвёртый - привязывать контекст текущего проекта к вызываемому проекту или нет
+//2. Версии 5.9.9.1 до сих пор не устранили ошибку, в результате которой такой код будет выполняться
+//  только в ZennoPoster. При запуске кода в ProjectMaker вы получите ошибку.

@@ -1,0 +1,4 @@
+﻿Global.SpecialForms.AlertNotificator.Instance.DisplayAlert("Это заголовок", "текст оповещения", null, 15000);
+
+//Примечания:
+//1. Последний параметр метода DisplayAlert - время нахождения оповещения на экране (в миллисекундах)

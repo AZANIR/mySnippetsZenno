@@ -1,0 +1,111 @@
+﻿//Создаём объект класса IZennoTable, привязываемся к списку уровня проекта
+IZennoTable tblTest = project.Tables["Таблица 1"];
+tblTest.Clear(); //очищаем таблицу
+
+//наполняем таблицу тестовыми значениями
+tblTest.AddRow(new String[]{"Это", "первая", "строка"});
+tblTest.AddRow(new String[]{"Эта", "вторая", "строка"});
+tblTest.AddRow(new String[]{"Это", "третья", "строка"});
+tblTest.AddRow(new String[]{"Это", "четвёртая", "строка"});
+tblTest.AddRow(new String[]{"Это", "пятая", "стрУка"});
+tblTest.AddRow(new String[]{"Это", "шестая", "стрЕка"});
+tblTest.AddRow(new String[]{"Это", "седьмая", "стрАка"});
+tblTest.AddRow(new String[]{"Эты", "восьмая", "строка"});
+tblTest.AddRow(new String[]{"Это", "девятая", "стростро"});
+
+//IZennoTable.DeleteRow: удаляем строку таблицы с соответствующим индексом
+//tblTest.DeleteRow(0);
+
+//Удаляем строки с указанными номерами (номера через запятую, числа или "Random". нумерация элементов начинается с нуля)
+string strRemoveIndexes="0, 2-4, Random";
+strRemoveIndexes = strRemoveIndexes.Replace(" ", String.Empty);
+List<int> lstRemoveIndexes = new List<int>();
+Random rndListRemove = new Random();
+foreach (string strRemoveIndex in strRemoveIndexes.Split(',')) {
+	if (Regex.IsMatch(strRemoveIndex, @"^\d+$")){
+		lstRemoveIndexes.Add(Convert.ToInt32(strRemoveIndex));
+	}else if(strRemoveIndex.Trim().ToLower()=="random") {
+		if(tblTest.RowCount>0) lstRemoveIndexes.Add(rndListRemove.Next(0, tblTest.RowCount-1));
+	}else if(strRemoveIndex.Contains("-")){
+		int intStartIndex = Convert.ToInt32(new Regex(@"^\d(?=\D)").Match(strRemoveIndex).Value);
+		int intEndIndex = Convert.ToInt32(new Regex(@"(?<=\D)\d$").Match(strRemoveIndex).Value);
+		
+		for (int r=intStartIndex; r<intEndIndex+1; r++) {
+			lstRemoveIndexes.Add(r);
+		}
+	}
+}
+lstRemoveIndexes.Sort();
+int intElementsRemoved=0;
+foreach (int intRemoveIndex in lstRemoveIndexes) {
+	int intElementToRemove = intRemoveIndex-intElementsRemoved++;
+	if (intElementToRemove<tblTest.RowCount) tblTest.DeleteRow(intElementToRemove);
+}
+
+//IZennoTable.Clear: //удаляем всех элементоы таблицы (раскомментируйте чтобы проверить)
+//tblTest.Clear();
+
+//Удаляем элементы, содержащие текст
+string strContainsForRemove = "Эта";
+int i=0;
+while(true) {
+	if (i==tblTest.RowCount||tblTest.RowCount==0) break;
+	if (String.Join(String.Empty, tblTest.GetRow(i)).Contains(strContainsForRemove)) {
+		tblTest.DeleteRow(i);
+	}else{
+		i++;
+	}
+}
+
+//Удаляем элементы, НЕ содержащие текст
+string strNotContainsForRemove = "Это";
+int k=0;
+while(true) {
+	if (k==tblTest.RowCount||tblTest.RowCount==0) break;
+	if (!String.Join(String.Empty, tblTest.GetRow(k)).Contains(strNotContainsForRemove)) {
+		tblTest.DeleteRow(k);
+	}else{
+		k++;
+	}
+}
+
+//Удаляем элементы, удовлетворяющие регулярному выражению
+string strContainsRegex = @"стр[^о]ка";
+int m=0;
+while(true) {
+	if (m==tblTest.RowCount||tblTest.RowCount==0) break;
+	if (new Regex(strContainsRegex).Matches(String.Join(String.Empty, tblTest.GetRow(m))).Count>0) {
+		tblTest.DeleteRow(m);
+	}else{
+		m++;
+	}
+}
+
+
+//Удаляем элементы, НЕ удовлетворяющие регулярному выражению
+string strNotContainsRegex = @"строка";
+int n=0;
+while(true) {
+	if (n==tblTest.RowCount||tblTest.RowCount==0) break;
+	if (new Regex(strNotContainsRegex).Matches(String.Join(String.Empty, tblTest.GetRow(n))).Count==0) {
+		tblTest.DeleteRow(n);
+	}else{
+		n++;
+	}
+}
+
+//Добавляем пустой и пробельный элемент для следующего шага
+tblTest.AddRow("");
+tblTest.AddRow(new String[]{" ", " ", " "});
+//Удаляем пустые и содержащие только пробельные символы элементы
+int p=0;
+while(true) {
+	if (p==tblTest.RowCount||tblTest.RowCount==0) break;
+	if (String.IsNullOrWhiteSpace(String.Join(String.Empty, tblTest.GetRow(p)))) {
+		tblTest.DeleteRow(p);
+	}else{
+		p++;
+	}
+}
+
+project.SendInfoToLog("Выполнено. Проверьте содержимое таблицы Таблица 1");

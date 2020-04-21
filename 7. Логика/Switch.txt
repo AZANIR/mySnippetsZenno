@@ -1,0 +1,22 @@
+﻿int intTest = 5;
+string strResult = String.Empty;
+
+switch (intTest) {
+	case 1:
+		strResult = "один";
+		break;
+	case 2:
+	case 3:
+		strResult = "два или три";
+		break;
+	case 4:
+	case 5:
+	default:
+		strResult = "четыре, пять, или другой вариант";
+		break;
+}
+
+project.SendInfoToLog("Выполнено! Результат: " + strResult);
+
+//Примечания:
+//1. Подробнее смотрите в разделе "2. Основы языка C#" курса ZennoPro Base Course

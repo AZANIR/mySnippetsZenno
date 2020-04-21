@@ -1,0 +1,18 @@
+﻿// Клик
+//Кнопка мыши
+// "left" - левая кнопка мыши
+// "right" - правая кнопка мыши
+// "middle" - колесико/средняя кнопка мыши
+string button = "left";
+//Действие
+// "click" - обычный клик
+// "down" - зажатие клавиши (зажимаем и держим)
+// "up" - отжатие клавиши (отпускаем зажатую кнопку)
+string mouseEvent = "click";
+
+//Клик
+instance.ActiveTab.FullEmulationMouseClick(button, mouseEvent);
+
+// Примечание
+//предварительно необходимо подвести мышь к нужному месту методом
+//FullEmulationMouseMove или FullEmulationMouseMoveToHtmlElement

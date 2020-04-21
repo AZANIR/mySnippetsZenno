@@ -1,0 +1,11 @@
+﻿// Движение к координатам
+//Координата по X (по горизонтали)
+int toX = 200;
+//Координата по Y (по вертикали)
+int toY = 200;
+
+//Проверка значений
+if (toX>instance.ActiveTab.MainDocument.Width)	toX = instance.ActiveTab.MainDocument.Width;
+if (toY>instance.ActiveTab.MainDocument.Height)	toY = instance.ActiveTab.MainDocument.Height;
+//Движение к указанным координатам
+instance.ActiveTab.FullEmulationMouseMove(toX, toY);

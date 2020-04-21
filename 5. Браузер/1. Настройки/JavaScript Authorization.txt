@@ -1,0 +1,5 @@
+﻿//Instance.SetAuthorizationPolicy - логин и пароль, которые нужно ввести в JavaScript-запросе от сайта (в случае его появления), и кнопка, которую необходимо нажать.
+instance.SetAuthorizationPolicy("ok", "логин", "пароль");
+
+//Примечания:
+//1. Возможные значения первого параметра метода SetAuthorizationPolicy: "ok" либо "cancel";

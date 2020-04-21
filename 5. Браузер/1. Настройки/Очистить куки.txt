@@ -1,0 +1,2 @@
+﻿//Instance.ClearCookie - очистка кук инстанса (текущего "браузера")
+instance.ClearCookie();

@@ -1,0 +1,7 @@
+﻿// Получение текущих координат мыши
+//Получить координату мыши во вкладке по горизонтали (X)
+int x = instance.ActiveTab.FullEmulationMouseCurrentPosition.X;
+//Получить координату мыши во вкладке по горизонтали (Y)
+int y = instance.ActiveTab.FullEmulationMouseCurrentPosition.Y;
+//Получить координаты мыши во вкладке в виде точки (тип Point)
+Point p = instance.ActiveTab.FullEmulationMouseCurrentPosition;

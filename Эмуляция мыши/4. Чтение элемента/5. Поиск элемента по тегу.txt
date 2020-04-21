@@ -1,0 +1,13 @@
+﻿// Поиск элемента по тегу
+//Тег элемента
+string tag = "img";
+//Номер совпадения
+int num = 0;
+
+//Примерный размер шрифта текста элемента
+int sizeOfType = 35;
+
+//Поиск элемента
+var el = instance.ActiveTab.FindElementByTag(tag, num);
+//Чтение элемента
+instance.ActiveTab.FullEmulationMouseMoveAboveHtmlElement(el, sizeOfType);

@@ -1,0 +1,8 @@
+﻿//Instance.GetTabByAddress().Close - закрыть вкладку по её названию
+instance.GetTabByAddress("tabname").Close();
+
+//Instance.GetTabByAddress().Close - закрыть вкладку по её номеру
+instance.AllTabs[1].Close();
+
+//Instance.ActiveTab.Close - закрыть активную вкладку
+instance.ActiveTab.Close();

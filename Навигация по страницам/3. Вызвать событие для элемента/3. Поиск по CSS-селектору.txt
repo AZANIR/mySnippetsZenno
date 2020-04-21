@@ -1,0 +1,46 @@
+﻿
+// НАСТРОЙКИ СНИППЕТА
+
+// По умолчанию все значения для сниппета берутся из переменных
+// проекта с префиксами "find_element_", "set_value_", "get_value_", "rise_"
+
+// Если заполнить поля ниже - значения переменных будут игнорироваться
+
+//CSS-селектор
+string selector = "";
+//Номер совпадения
+int number = 0;
+
+//Названия события для вызова
+string eventName = "";
+
+
+#region Капот
+
+//Получаем значения из переменных
+if (string.IsNullOrWhiteSpace(selector) && project.Variables.Keys.Contains("find_element_selector"))
+{
+	selector = project.Variables["find_element_selector"].Value;
+}
+if (project.Variables.Keys.Contains("find_element_number"))
+{
+	int.TryParse(project.Variables["find_element_number"].Value, out number);
+}
+
+if (string.IsNullOrWhiteSpace(eventName) && project.Variables.Keys.Contains("rise_event_name"))
+{
+	eventName = project.Variables["rise_event_name"].Value;
+}
+
+//Ищем элемент
+var tab = instance.ActiveTab;
+var el = tab.QuerySelector(selector, number);
+if (el.IsNull || el.IsVoid)
+{
+	throw new Exception("Элемент по CSS-селектору '"+selector+"' не найден, действие не выполнено!");
+}
+//Вызываем событие
+el.RiseEvent(eventName, instance.EmulationLevel);
+
+#endregion
+

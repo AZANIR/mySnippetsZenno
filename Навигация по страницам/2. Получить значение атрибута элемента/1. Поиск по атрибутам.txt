@@ -1,0 +1,76 @@
+﻿
+// НАСТРОЙКИ СНИППЕТА
+
+// По умолчанию все значения для сниппета берутся из переменных
+// проекта с префиксами "find_element_", "set_value_", "get_value_", "rise_"
+
+// Если заполнить поля ниже - значения переменных будут игнорироваться
+
+//Один или несколько тегов (через ';')
+string tag = "";
+//Название атрибута
+string attributeName = "";
+//Значение атрибута
+string attributeValue = "";
+//Тип поиска значения (text, notext, regexp)
+string searchKind = "";
+//Номер совпадения
+int number = 0;
+
+//Название атрибута, значение которого нужно получить
+string getAttrName = "";
+
+
+#region Капот
+
+//Получаем значения из переменных
+if (string.IsNullOrWhiteSpace(tag) && project.Variables.Keys.Contains("find_element_tag"))
+{
+	tag = project.Variables["find_element_tag"].Value;
+}
+if (string.IsNullOrWhiteSpace(attributeName) && project.Variables.Keys.Contains("find_element_attr_name"))
+{
+	attributeName = project.Variables["find_element_attr_name"].Value;
+}
+if (string.IsNullOrWhiteSpace(attributeValue) && project.Variables.Keys.Contains("find_element_attr_value"))
+{
+	attributeValue = project.Variables["find_element_attr_value"].Value;
+}
+if (string.IsNullOrWhiteSpace(searchKind) && project.Variables.Keys.Contains("find_element_search_kind"))
+{
+	searchKind = project.Variables["find_element_search_kind"].Value;
+}
+if (searchKind!="text" && searchKind!="notext" && searchKind!="regexp")
+{
+	searchKind = "text";
+}
+if (project.Variables.Keys.Contains("find_element_number"))
+{
+	int.TryParse(project.Variables["find_element_number"].Value, out number);
+}
+
+if (string.IsNullOrWhiteSpace(getAttrName) && project.Variables.Keys.Contains("get_value_attr_name"))
+{
+	getAttrName = project.Variables["get_value_attr_name"].Value;
+}
+
+//Ищем элемент
+var tab = instance.ActiveTab;
+var el = tab.FindElementByAttribute(tag, attributeName, attributeValue, searchKind, number);
+if (el.IsNull || el.IsVoid)
+{
+	throw new Exception("Элемент по заданным атрибутам не найден, действие не выполнено!");
+}
+//Получаем значение атрибута
+string value = el.GetAttribute(getAttrName);
+if (project.Variables.Keys.Contains("get_value_result"))
+{
+	project.Variables["get_value_result"].Value = value;
+}
+else
+{
+	return value;
+}
+
+#endregion
+

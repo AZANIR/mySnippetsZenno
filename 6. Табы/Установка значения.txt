@@ -1,0 +1,28 @@
+﻿//Переходим на сайт для демонстрации
+string strURL = "http://zennolab.com/discussion/";
+Tab Tab1 = instance.ActiveTab;
+if (Tab1.URL!=strURL) {
+	Tab1.Navigate(strURL);
+	Tab1.WaitDownloading();
+}
+
+//Есть различные методы получения объекта класса HtmlElement (отедльный элемент на странице):
+HtmlElement elTest1 = instance.ActiveTab.FindElementByAttribute("a", "class", "concealed noOutline", "text", 0);
+HtmlElement elTest2 = instance.ActiveTab.FindElementById("logo");
+HtmlElement elTest3 = instance.ActiveTab.FindElementByName("keywords"); //найдётся элемент 
+HtmlElement elTest4 = instance.ActiveTab.FindElementByTag("h1", 0);
+HtmlElement elTest5 = instance.ActiveTab.FindElementByXPath("//div[@id='copyright']/descendant::span", 0);
+
+//HtmlElement.SetAttribute - установка значения атрибута элемента на странице
+elTest1.SetAttribute("InnerHtml", "Дорогие Друзи!");
+elTest2.SetAttribute("InnerHtml", "<h1>Здесь был логотип</h1>");
+elTest3.SetValue("Ищем ищем", "Middle");
+elTest4.SetAttribute("InnerHtml", "Суперфорум!");
+elTest5.SetAttribute("InnerHtml", "Все права защищены, да");
+
+//Отдельно: демонстрация работы с IntelliSearch
+instance.ActiveTab.FindElementByXPath("//h3[@id='loginBarHandle']/descendant::a", 0).Click(); //открываем плашку авторизации
+Thread.Sleep(1500); //ждём 1,5 секунды
+HtmlElement elTest6 = instance.FindElementByIntelliSearch("2", "28", false, false); //находим элемент при помощи IntelliSearch (в кавычках - id записей базы IntelliSearch)
+//HtmlElement elTest6 = instance.FindElementByIntelliSearch("Авторизация", "E-mail", false, false); //так почему-то не работает
+elTest6.SetValue("blaka@mail.ru", "Middle");

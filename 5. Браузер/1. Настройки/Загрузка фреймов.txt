@@ -1,0 +1,2 @@
+﻿//Instance.DownloadFrame - использовать загрузку фреймов или нет
+instance.DownloadFrame = false; //true, если включить, false, если выключить

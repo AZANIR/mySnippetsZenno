@@ -1,0 +1,11 @@
+﻿// Поиск элемента по имени (свойство name)
+//name элемента
+string name = "text";
+
+//Примерный размер шрифта текста элемента
+int sizeOfType = 35;
+
+//Поиск элемента
+var el = instance.ActiveTab.FindElementByName(name);
+//Чтение элемента
+instance.ActiveTab.FullEmulationMouseMoveAboveHtmlElement(el, sizeOfType);

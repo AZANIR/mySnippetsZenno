@@ -1,0 +1,13 @@
+﻿// Поиск элемента по XPath
+//Путь XPath до элемента
+string xpath = "//img[@class='logo']";
+//Номер совпадения
+int num = 0;
+
+//Примерный размер шрифта текста элемента
+int sizeOfType = 35;
+
+//Поиск элемента
+var el = instance.ActiveTab.FindElementByXPath(xpath, num);
+//Чтение элемента
+instance.ActiveTab.FullEmulationMouseMoveAboveHtmlElement(el, sizeOfType);

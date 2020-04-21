@@ -1,0 +1,2 @@
+﻿//Instance.Reload - перезагрузка инстанса
+instance.Reload();

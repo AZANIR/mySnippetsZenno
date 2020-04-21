@@ -1,0 +1,26 @@
+﻿string strServerAddress = project.Variables["cfg_server_address"].Value;
+int intServerPort = Convert.ToInt32(project.Variables["cfg_server_port"].Value);
+string strServerLogin = project.Variables["cfg_server_login"].Value;
+string strServerPassword = project.Variables["cfg_server_password"].Value;
+
+//ZennoPoster.FtpUploadDirectory - загружаем папку на FTP-сервер
+string strRemotePath = "/folder5/";
+string strLocalFolder = project.Directory + @"\folder5";
+
+ZennoPoster.FtpUploadDirectory(strServerAddress, intServerPort, "FTP", strServerLogin, strServerPassword, "", strRemotePath, strLocalFolder, false, false);
+
+project.SendInfoToLog("Выполнено! Проверьте содержимое папки на FTP-сервере");
+
+//Примечания:
+//1. Параметры метода FtpUploadDirectory (https://help.zennolab.com/en/v5/zennoposter/5.9.9/webframe.html#topic881.html)
+//  первый - адрес FTP-сервера
+//  второй - порт FTP-сервера
+//  третий - протокол. Допустимые значения: "FTP", "sFTP", "FTPs"
+//  четвёртый - логин
+//  пятый - пароль
+//  шестой - прокси в формате login:pass@ip:port или ip:port
+//  седьмой - путь к папке на FTP-сервере
+//  восьмой - локальный путь к закачиваемой папке
+//  девятый - использовать рекурсию или нет (загружать ли подпапки и их содержимое)
+//  десятый - добавлять корневое имя к имени локальной папки. Не совсем понятно, зачем нужна эта настройка. В моём случае добавляет "C:\"
+//2.путь к локальной папке при обращении к методу FtpUploadDirectory не должен заканчиваться слешем!

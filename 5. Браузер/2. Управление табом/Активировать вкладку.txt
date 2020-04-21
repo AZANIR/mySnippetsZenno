@@ -1,0 +1,5 @@
+﻿//Instance.GetTabByAddress().SetActive() - активировать вкладку по её названию
+instance.GetTabByAddress("tabname").SetActive();
+
+//Instance.AllTabs[].SetActive() - активировать вкладку по её номеру
+instance.AllTabs[1].SetActive();

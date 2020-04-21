@@ -1,0 +1,10 @@
+﻿// Поиск элемента по тегу
+//Тег элемента
+string tag = "img";
+//Номер совпадения
+int num = 0;
+
+//Поиск элемента
+var el = instance.ActiveTab.FindElementByTag(tag, num);
+//Движение к элементу
+instance.ActiveTab.FullEmulationMouseMoveToHtmlElement(el);

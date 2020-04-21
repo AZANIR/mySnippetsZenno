@@ -1,0 +1,14 @@
+﻿//Instance.IgnoreAjaxRequests - игнорировать AJAX
+instance.IgnoreAjaxRequests = true; //true, если игнорировать, false, если нет
+
+//Instance.IgnoreAdditionalRequests - игнорировать GET/POST запросы
+instance.IgnoreAdditionalRequests = false; //true, если игнорировать, false, если нет
+
+//Instance.IgnoreFrameRequests - игнорировать FRAME
+instance.IgnoreFrameRequests = false; //true, если игнорировать, false, если нет
+
+//Instance.IgnoreFlashRequests - игнорировать FLASH
+instance.IgnoreFlashRequests = true; //true, если игнорировать, false, если нет
+
+//Примечания:
+//1. Если запросы игнорируются, то они не будут влиять на установление статуса .IsBusy для вкладки (?)

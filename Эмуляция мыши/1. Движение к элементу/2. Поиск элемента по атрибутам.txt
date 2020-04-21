@@ -1,0 +1,16 @@
+﻿// Поиск элемента по атрибутам
+//Тег элемента
+string tag = "img";
+//Атрибут элемента
+string attr = "src";
+//Значение атрибута
+string value = "http://site.+?/";
+//Тип поиска (text, notext или regex)
+string searchType = "regex";
+//Номер совпадения
+int num = 0;
+
+//Поиск элемента
+var el = instance.ActiveTab.FindElementByAttribute(tag, attr, value, searchType, num);
+//Движение к элементу
+instance.ActiveTab.FullEmulationMouseMoveToHtmlElement(el);

@@ -1,0 +1,4 @@
+﻿HtmlElement elTest = instance.ActiveTab.FindElementByXPath("//label[@id='SignupButton']/a", 0);
+
+//HtmlElement.RiseEvent - вызов определённого события для объекта HtmlElement.
+elTest.RiseEvent("onclick", instance.EmulationLevel);

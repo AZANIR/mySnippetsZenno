@@ -1,0 +1,2 @@
+﻿//Сброс настроек движения мыши на значения по умолчанию
+instance.ActiveTab.FullEmulationMouseSetOptions();

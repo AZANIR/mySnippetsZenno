@@ -1,0 +1,18 @@
+﻿int intTimeOut = 3000; //таймаут ожидания завешения процесса
+
+ProcessStartInfo startInfo = new ProcessStartInfo();
+startInfo.FileName = @"c:\Program Files (x86)\Notepad++\notepad++.exe";
+startInfo.Arguments = @"c:\Program Files (x86)\Notepad++\readme.txt";
+startInfo.WindowStyle = ProcessWindowStyle.Minimized;
+
+Process myProcess = Process.Start(startInfo);
+
+project.SendInfoToLog("Процесс запущен");
+
+myProcess.WaitForExit(intTimeOut); //ожидаем завершения процесса указанное количество миллисекунд (если без указания параметра - то без таймаута)
+
+int intReturnCode = myProcess.ExitCode;
+project.SendInfoToLog("Код завершения процесса: " + intReturnCode);
+
+//Примечания:
+//Для использования этого кода необходимо прописать в using следующее: using System.Diagnostics; 

@@ -1,0 +1,59 @@
+﻿
+// НАСТРОЙКИ СНИППЕТА
+
+// По умолчанию все значения для сниппета берутся из переменных
+// проекта с префиксами "find_element_", "set_value_", "get_value_", "rise_"
+
+// Если заполнить поля ниже - значения переменных будут игнорироваться
+
+//Путь XPath
+string xpath = "";
+//Номер совпадения
+int number = 0;
+
+//Название атрибута для установки
+string setAttrName = "";
+//Значение атрибута для установки
+string setAttrValue = "";
+
+
+#region Капот
+
+//Получаем значения из переменных
+if (string.IsNullOrWhiteSpace(xpath) && project.Variables.Keys.Contains("find_element_xpath"))
+{
+	xpath = project.Variables["find_element_xpath"].Value;
+}
+if (project.Variables.Keys.Contains("find_element_number"))
+{
+	int.TryParse(project.Variables["find_element_number"].Value, out number);
+}
+
+if (string.IsNullOrWhiteSpace(setAttrName) && project.Variables.Keys.Contains("set_value_attr_name"))
+{
+	setAttrName = project.Variables["set_value_attr_name"].Value.ToLower();
+}
+if (string.IsNullOrWhiteSpace(setAttrValue) && project.Variables.Keys.Contains("set_value_attr_value"))
+{
+	setAttrValue = project.Variables["set_value_attr_value"].Value;
+}
+
+//Ищем элемент
+var tab = instance.ActiveTab;
+var el = tab.FindElementByXPath(xpath, number);
+if (el.IsNull || el.IsVoid)
+{
+	throw new Exception("Элемент по пути '"+xpath+"' не найден, действие не выполнено!");
+}
+//Устанавливаем значение атрибута
+if (setAttrName=="value")
+{
+	el.SetValue(setAttrValue, instance.EmulationLevel);
+}
+else
+{
+	el.SetAttribute(setAttrName, setAttrValue);
+}
+
+#endregion
+

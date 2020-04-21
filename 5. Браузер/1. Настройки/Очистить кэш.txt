@@ -1,0 +1,2 @@
+﻿//Instance.ClearCache - очистка кэша инстанса (текущего "браузера")
+instance.ClearCache();

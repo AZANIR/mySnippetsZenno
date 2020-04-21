@@ -1,0 +1,15 @@
+﻿//открываем две дополнительные вкладки для демонстрации
+Tab Tab1 = instance.ActiveTab;
+instance.NewTab("page2");
+instance.NewTab("page3");
+Tab1.SetActive();
+
+//Tab.Navigate - переход на страницу
+instance.ActiveTab.Navigate("http://zennolab.com", "http://ya.ru"); //переход с активной вкладки
+instance.AllTabs[1].Navigate("http://zennolab.com", "http://ya.ru"); //переход со вкладки с индексом 1 (вторая по порядку)
+instance.GetTabByAddress("page3").Navigate("http://zennolab.com", "http://ya.ru"); //переход со вкладки с указанным именем
+
+project.SendInfoToLog("Выполнено. Проверьте содержимое вкладок");
+
+//Примечания:
+//1. индексация вкладок начинается с нуля.

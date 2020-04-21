@@ -1,0 +1,7 @@
+﻿instance.SetFileUploadPolicy("ok", ""); //устанавливаем политику загрузки файлов
+//Instance.SetFilesForUpload - назначаем конкретный файл для загрузки при активации соответствующего элемента
+instance.SetFilesForUpload(project.Directory + @"\Uploads\Привет.jpg");
+
+//Примечания:
+//1. Первый параметр метода SetFileUploadPolicy - кнопка в окне загрузки, которая будет нажата после выбора файла.
+//2. Второй параметр - "тип ответа" (https://help.zennolab.com/en/v5/zennoposter/5.9.9/webframe.html#topic209.html). Что это такое - сам не знаю. Мучайте разработчиков.

@@ -1,0 +1,19 @@
+﻿string strServerAddress = project.Variables["cfg_server_address"].Value;
+int intServerPort = Convert.ToInt32(project.Variables["cfg_server_port"].Value);
+string strServerLogin = project.Variables["cfg_server_login"].Value;
+string strServerPassword = project.Variables["cfg_server_password"].Value;
+
+//предварительно создадим файлы, которые будут передаваться (если в указанной папке будет больше файлов с расширением txt - они все будут переданы
+File.WriteAllText(project.Directory+@"\test2.txt", "Проверка");
+File.WriteAllText(project.Directory+@"\test3.txt", "Проверка");
+
+string strDestinationPath = "/folder3/";
+string[] arrFiles = Directory.GetFiles(project.Path, "*.txt", SearchOption.TopDirectoryOnly);
+foreach (string strFilePath in arrFiles) {
+	ZennoPoster.FtpUploadFile(strServerAddress, intServerPort, "FTP", strServerLogin, strServerPassword, "", strDestinationPath, strFilePath);
+}
+
+project.SendInfoToLog("Выполнено! Проверьте содержимое папки на FTP-сервере");
+
+//Примечания:
+//1. Методы класса Directory, предназначенного для работы с папками, мы будем рассматривать отдельно (на ступени Advanced курса по C#)

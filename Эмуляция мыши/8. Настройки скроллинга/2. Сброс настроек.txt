@@ -1,0 +1,2 @@
+﻿//Сброс настроек скроллинга на значения по умолчанию
+instance.ActiveTab.FullEmulationMouseSetScrollBorder();

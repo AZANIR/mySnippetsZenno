@@ -1,0 +1,22 @@
+﻿string strServerAddress = project.Variables["cfg_server_address"].Value;
+int intServerPort = Convert.ToInt32(project.Variables["cfg_server_port"].Value);
+string strServerLogin = project.Variables["cfg_server_login"].Value;
+string strServerPassword = project.Variables["cfg_server_password"].Value;
+
+//ZennoPoster.FtpGetList - создаём список, содержащий имена всех файлов в папке
+string strRemoteFolder = "/folder4/";
+string strLocalFolder = project.Path + strRemoteFolder.Replace("/", String.Empty);
+if (!Directory.Exists(strLocalFolder)) Directory.CreateDirectory(strLocalFolder);
+
+List<string> lstFilesOnServer = new List<string>(ZennoPoster.FtpGetList(strServerAddress, intServerPort, "FTP", strServerLogin, strServerPassword, "", strRemoteFolder, true, false));
+foreach(string strFileName in lstFilesOnServer) {
+	string strLocalFilePath = strRemoteFolder + strFileName;
+	strLocalFilePath = project.Directory + strLocalFilePath.Replace("/",@"\");
+	
+	string strParentFolderPath = new FileInfo(strLocalFilePath).DirectoryName;
+	if (!Directory.Exists(strParentFolderPath)) Directory.CreateDirectory(strParentFolderPath);
+	
+	ZennoPoster.FtpDownload(strServerAddress, intServerPort, "FTP", strServerLogin, strServerPassword, "", strRemoteFolder+strFileName, strParentFolderPath);
+}
+
+project.SendInfoToLog("Выполнено! Проверьте содержимое папки проекта");

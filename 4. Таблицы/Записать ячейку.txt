@@ -1,0 +1,19 @@
+﻿//Создаём объект класса IZennoTable, привязываемся к списку уровня проекта
+IZennoTable tblTest = project.Tables["Таблица 1"];
+tblTest.Clear(); //очищаем таблицу
+
+//наполняем таблицу тестовыми значениями
+tblTest.AddRow(new String[]{"Это", "первая", "строка"});
+tblTest.AddRow(new String[]{"Эта", "вторая", "строка"});
+tblTest.AddRow(new String[]{"Это", "третья", "строка"});
+tblTest.AddRow(new String[]{"Это", "четвёртая", "строка"});
+tblTest.AddRow(new String[]{"Это", "пятая", "стрУка"});
+tblTest.AddRow(new String[]{"Это", "шестая", "стрЕка"});
+tblTest.AddRow(new String[]{"Это", "седьмая", "стрАка"});
+tblTest.AddRow(new String[]{"Эты", "восьмая", "строка"});
+tblTest.AddRow(new String[]{"Это", "девятая", "стростро"});
+
+//IZennoTable.SetCell: устанавливаем значение ячейки
+tblTest.SetCell(2, 0, "НОВОЕ ЗНАЧЕНИЕ"); 
+
+project.SendInfoToLog("Выполнено. Проверьте содержимое таблицы Таблица 1");

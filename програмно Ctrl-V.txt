@@ -1,0 +1,3 @@
+﻿//(программно делаем CTRL+V) 
+System.Windows.Forms.Clipboard.SetText(descr);
+instance.ActiveTab.KeyEvent("v","press","ctrl");

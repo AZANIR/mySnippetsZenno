@@ -1,0 +1,19 @@
+﻿//Создаём объект класса IZennoTable, привязываемся к списку уровня проекта
+IZennoTable tblTest = project.Tables["Таблица 1"];
+
+tblTest.Clear(); //очищаем таблицу
+
+//Объявляем переменную, значение которой будет использоваться в качестве разделителя
+string strDelimiter = tblTest.ColSeparator;
+
+//Объявляем переменную, содержащую данные для добавления в таблицу
+string strDataRow = "Это" + strDelimiter + "будет" + strDelimiter + "первая" + strDelimiter + "строка";
+
+//IZennoTable.AddRow: добавляем строку в таблицу (передача параметра в виде строки)
+tblTest.AddRow(strDataRow);
+
+//IZennoTable.AddRow: добавляем строку в таблицу (передача параметра в виде массива)
+string[] arrDataRow = new String[]{"Это", "будет", "вторая", "строка"};
+tblTest.AddRow(arrDataRow);
+
+project.SendInfoToLog("Выполнено. Проверьте содержимое таблицы Таблица 1");

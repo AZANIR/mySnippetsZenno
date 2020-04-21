@@ -1,0 +1,2 @@
+﻿//Instance.UsePlugins - использовать Flash/Java/Silverlight или нет
+instance.UsePlugins = false; //true, если включить, false, если выключить

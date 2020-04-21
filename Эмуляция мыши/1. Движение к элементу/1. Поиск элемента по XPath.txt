@@ -1,0 +1,10 @@
+﻿// Поиск элемента по XPath
+//Путь XPath до элемента
+string xpath = "//img[@class='logo']";
+//Номер совпадения
+int num = 0;
+
+//Поиск элемента
+var el = instance.ActiveTab.FindElementByXPath(xpath, num);
+//Движение к элементу
+instance.ActiveTab.FullEmulationMouseMoveToHtmlElement(el);

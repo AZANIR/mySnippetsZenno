@@ -1,0 +1,2 @@
+﻿//Получить координаты мыши во вкладке в виде точки (тип Point)
+Point p = instance.ActiveTab.FullEmulationMouseCurrentPosition;

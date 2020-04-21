@@ -1,0 +1,5 @@
+lock(SyncObject) {
+	var gbVar = project.GlobalVariables["rostonix@gmail.com", "globVar1"];
+	gbVar.Value = Convert.ToInt32(gbVar.Value.ToString())+1;
+	project.Variables["currentValue"].Value = gbVar.Value.ToString();
+}

@@ -1,0 +1,15 @@
+lock(SyncObject) {
+	try {
+		//дл€ глобальной переменной указываетс€ емайл и им€. ≈сли уже инициализирована, выходим по крайной линии
+		var gbVar = project.GlobalVariables["rostonix@gmail.com", "globVar1"];
+		// go to bad exit if already initilized
+		return null; 
+	} catch (KeyNotFoundException ex) {
+		int defaultValue = 0;
+		//раз не инициализирована ещЄ, то инициализируем и выходим по зелЄной!
+		project.GlobalVariables.SetVariable("rostonix@gmail.com", "globVar1", defaultValue);
+		project.Variables["currentValue"].Value = defaultValue.ToString();
+		// go to good exit if we initilized
+		return "ok";
+	}
+}

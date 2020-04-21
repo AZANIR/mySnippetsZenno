@@ -1,0 +1,22 @@
+﻿string strServerAddress = project.Variables["cfg_server_address"].Value;
+int intServerPort = Convert.ToInt32(project.Variables["cfg_server_port"].Value);
+string strServerLogin = project.Variables["cfg_server_login"].Value;
+string strServerPassword = project.Variables["cfg_server_password"].Value;
+
+//ZennoPoster.FtpDownload - загрузка файла с FTP-сервера
+ZennoPoster.FtpDownload(strServerAddress, intServerPort, "FTP", strServerLogin, strServerPassword, "", "test1.txt", project.Directory); //грузим файл по имени (только из корневой папки)
+ZennoPoster.FtpDownload(strServerAddress, intServerPort, "FTP", strServerLogin, strServerPassword, "", "/folder1/test2.txt", project.Directory); //грузим файл из произвольной папки
+
+project.SendInfoToLog("Выполнено! Проверьте содержимое папки проекта.");
+
+//Примечания:
+//1. Параметры метода FtpDownload (https://help.zennolab.com/en/v5/zennoposter/5.9.9/webframe.html#topic386.html)
+//  первый - адрес FTP-сервера
+//  второй - порт FTP-сервера
+//  третий - протокол. Допустимые значения: "FTP", "sFTP", "FTPs"
+//  четвёртый - логин
+//  пятый - пароль
+//  шестой - прокси в формате login:pass@ip:port или ip:port
+//  седьмой - имя файла либо полный путь файла на сервере
+//  восьмой - локальный путь для сохранения файла
+//2. Если локальный файл уже есть на диске - он будет перезаписан

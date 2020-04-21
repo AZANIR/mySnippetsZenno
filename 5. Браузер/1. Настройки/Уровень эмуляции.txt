@@ -1,0 +1,5 @@
+﻿//Instance.EmulationLevel - установка уровня эмуляции инстанса по умолчанию
+instance.EmulationLevel = "Middle"; 
+
+//Примечания:
+//1. Допустимые варианты значений: "None", "Middle", "Full"

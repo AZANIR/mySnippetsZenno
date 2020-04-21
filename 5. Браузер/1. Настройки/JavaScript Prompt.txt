@@ -1,0 +1,5 @@
+﻿//Instance.SetJSValuePromptPolicy - текст, который нужно ввести в JavaScript-оповещение от сайта (в случае его появления), и кнопка, которую необходимо нажать.
+instance.SetJSValuePromptPolicy("ok", "Текст для ввода");
+
+//Примечания:
+//1. Возможные значения первого параметра метода SetOkCancelConfirmPolicy: "ok" либо "cancel";

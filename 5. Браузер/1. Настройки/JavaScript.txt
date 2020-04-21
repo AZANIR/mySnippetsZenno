@@ -1,0 +1,2 @@
+﻿//Instance.JavaScript - использовать JavaScript или нет
+instance.UseJavaScripts = false; //true, если включить, false, если выключить

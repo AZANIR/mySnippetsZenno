@@ -1,0 +1,17 @@
+﻿//Переходим на сайт для демонстрации
+string strURL = "http://zennolab.com/discussion/login/login";
+Tab Tab1 = instance.ActiveTab;
+if (Tab1.URL!=strURL) {
+	Tab1.Navigate(strURL);
+	Tab1.WaitDownloading();
+}
+
+//Есть различные методы получения объекта класса HtmlElement (отедльный элемент на странице):
+HtmlElement elCaptcha = instance.ActiveTab.FindElementById("recaptcha_challenge_image");
+string strCaptchaResult = ZennoPoster.CaptchaRecognition("Anti-Captcha.dll", elCaptcha.DrawToBitmap(true), "");
+strCaptchaResult = Regex.Split(strCaptchaResult, @"-|-")[0];
+
+project.SendInfoToLog("Выполнено! Результат распознавания капчи: " + strCaptchaResult);
+
+//Примечания:
+//1. Перед запуском кода не забудьте прописать параметры доступа к смс-сервису в настройках программы, а также выбрать имя dll-библиотеки соответствующего сервиса

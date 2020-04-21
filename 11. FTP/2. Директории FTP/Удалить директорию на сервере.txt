@@ -1,0 +1,21 @@
+﻿string strServerAddress = project.Variables["cfg_server_address"].Value;
+int intServerPort = Convert.ToInt32(project.Variables["cfg_server_port"].Value);
+string strServerLogin = project.Variables["cfg_server_login"].Value;
+string strServerPassword = project.Variables["cfg_server_password"].Value;
+
+//ZennoPoster.FtpDeleteDirectory - удаляем папку на FTP-сервере
+string strRemotePath = "/folder5/";
+
+ZennoPoster.FtpDeleteDirectory(strServerAddress, intServerPort, "FTP", strServerLogin, strServerPassword, "", strRemotePath);
+
+project.SendInfoToLog("Выполнено! Проверьте отсутствие папки на FTP-сервере");
+
+//Примечания:
+//1. Параметры метода FtpUploadDirectory (https://help.zennolab.com/en/v5/zennoposter/5.9.9/webframe.html#topic881.html)
+//  первый - адрес FTP-сервера
+//  второй - порт FTP-сервера
+//  третий - протокол. Допустимые значения: "FTP", "sFTP", "FTPs"
+//  четвёртый - логин
+//  пятый - пароль
+//  шестой - прокси в формате login:pass@ip:port или ip:port
+//  седьмой - путь к удаляемой папке на FTP-сервере

@@ -1,0 +1,16 @@
+﻿string strJavaScript1 = @"\local-utf.js";
+string strResult1 = instance.EvaluateJavaScript(File.ReadAllText(project.Directory + strJavaScript1));
+project.SendInfoToLog (String.Format("Выполнен скрипт: {0}. Результат выполнения: {1}", strJavaScript1, strResult1));
+
+string strJavaScript2 = @"\local-ansi.js";
+string strResult2 = instance.EvaluateJavaScript(File.ReadAllText(project.Directory + strJavaScript2));
+project.SendInfoToLog (String.Format("Выполнен скрипт: {0}. Результат выполнения: {1}", strJavaScript2, strResult2));
+
+string strJavaScript3 = "5+10";
+string strResult3 = instance.EvaluateJavaScript(strJavaScript3);
+project.SendInfoToLog (String.Format("Выполнен скрипт: {0}. Результат выполнения: {1}", strJavaScript3, strResult3));
+
+//Примечания:
+//Для метода EvaluateJavaScript (https://help.zennolab.com/en/v5/zennoposter/5.9.9/webframe.html#topic182.html) 
+//  заявлена поддержка Windows Scripting Host. Однако не понятно, как именно она реализована.
+//  Если необходимо запустить vbs или js файл - запускайте через вызов wscript.exe с параметрами.
