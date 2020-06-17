@@ -1,8 +1,7 @@
-Collection of snippets C# from Zennoposter!
-Коллекция сниппетов C# для Zennoposter!
+﻿# Collection of snippets C# from Zennoposter! - Коллекция сниппетов C# для Zennoposter!
 
-Constantly updated and supplemented.
-Постоянно обновляется и дополняется.
+## Constantly updated and supplemented - Постоянно обновляется и дополняется.
+ 
 
 If you use this collection for yourself 
 and you have snippets that are not in this collection,
