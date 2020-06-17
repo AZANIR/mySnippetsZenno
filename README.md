@@ -1,4 +1,4 @@
-﻿# Collection of snippets C# from Zennoposter! - Коллекция сниппетов C# для Zennoposter!
+## Collection of snippets C# from Zennoposter! - Коллекция сниппетов C# для Zennoposter!
 
 ## Constantly updated and supplemented - Постоянно обновляется и дополняется.
  
