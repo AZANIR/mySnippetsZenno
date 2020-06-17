@@ -1,6 +1,6 @@
 ![](https://i.imgur.com/XV3ZnLK.png)
 ## Collection of snippets C# from Zennoposter! - Коллекция сниппетов C# для Zennoposter!
-=====================
+-----------------------------------
 
 ## Constantly updated and supplemented - Постоянно обновляется и дополняется.
 -----------------------------------
