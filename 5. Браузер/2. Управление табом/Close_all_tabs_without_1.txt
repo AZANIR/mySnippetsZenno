@@ -1,0 +1,6 @@
+﻿/*закрывает все вкладки кроме page(первой)*/
+Tab[] tabs = instance.AllTabs;
+for (int i = 1; i < tabs.Count(); i++)
+{
+    tabs[i].Close();
+}

@@ -1,0 +1,11 @@
+﻿/*Нужно добавить директиву using (Свой код > Директивы using):
+using System.Security.Cryptography;*/
+
+MD5 md5 = MD5.Create();
+byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(project.Profile.Password)); // Login - название вашей переменной с логином
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < hash.Length; i++)
+{
+    sb.Append(hash[i].ToString("x2"));
+}
+return sb; // Результат (В экшене C# > Положить результат в переменную > напр., Pass)
